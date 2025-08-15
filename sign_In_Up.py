@@ -1,14 +1,21 @@
-import os, hashlib
+import os, hashlib, json, datetime
 
 os.system("cls")
 
-print()
-print("Enter 1 to sign up as an institute")
-print("Enter 2 to sign up as a student")
-print("Enter 3 to sign in\n")
 
 
 
+def uid():
+        """
+        Generates a unique 12-digit ID based on current UTC timestamp
+        Returns format: "XXXX-XXXX-XXXX"
+        """
+
+        t = datetime.datetime.now(datetime.timezone.utc)
+        micros_since_epoch = int(t.timestamp() * 1_000_000)
+        s = f"{micros_since_epoch:012d}"[-12:]  # keep the last 12 digits
+
+        return f"{s[0:4]}-{s[4:8]}-{s[8:12]}"
 
 def studentSignUp():
         pass
