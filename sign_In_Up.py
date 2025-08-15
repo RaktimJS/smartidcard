@@ -86,18 +86,29 @@ def signUp():
                 "studData":{}
         }
 
+        # Create a new JSON file for every new sign up
         with open(f"data/{id}.json", "w") as file:
                 file.write("{}")
-        
-        with open(f"data/{id}.json", "r") as file:
-                data = json.load(file)
-
-        data = credDict
-
-        with open(f"data/{id}.json", "w") as file:
-                json.dump(data, file, indent = 8)
 
 
+        '''
+        Appending the data details of the newly registered
+        school in `mapping.json` for mapping and granting
+        access upon sign up
+        '''
+        with open("mapping.json", "r") as mapFile:
+                data = json.load(mapFile)
+
+        data.append(
+                {
+                        "id": id,
+                        "email": email,
+                        "pswrd": pswrd
+                }
+        )
+
+        with open("mapping.json", "w") as mapFile:
+                data = json.dump(data, mapFile, indent = 8)
 
 
 def signIn():
@@ -129,32 +140,33 @@ def signIn():
 
 
 
-print()
-print("Enter 1 to sign up (as an institute)")
-print("Enter 2 to sign in\n")
+if __name__ == "__main__":
+        print()
+        print("Enter 1 to sign up (as an institute)")
+        print("Enter 2 to sign in\n")
 
-while True:
-        selector = input("Enter your choice from the above list (EXCEEDING VALUES WILL BE CLIPPED TO NEAREST LIMIT): ")
+        while True:
+                selector = input("Enter your choice from the above list (EXCEEDING VALUES WILL BE CLIPPED TO NEAREST LIMIT): ")
 
-        try:
-                selector = int(selector)
+                try:
+                        selector = int(selector)
 
-                if selector < 1:
-                        selector = 1
-                elif selector > 2:
-                        selector = 2
+                        if selector < 1:
+                                selector = 1
+                        elif selector > 2:
+                                selector = 2
 
-                break
-        except ValueError or EOFError:
-                print("Invalid Input\n")
+                        break
+                except ValueError or EOFError:
+                        print("Invalid Input\n")
 
-if selector == 1:
-        print("\n\nSIGN UP AS AN INSTITUTE")
-        print    ("-----------------------\n")
+        if selector == 1:
+                print("\n\nSIGN UP AS AN INSTITUTE")
+                print    ("-----------------------\n")
 
-        signUp()
-else:
-        print("\n\nSIGN IN")
-        print    ("-------\n")
+                signUp()
+        else:
+                print("\n\nSIGN IN")
+                print    ("-------\n")
 
-        signIn()
+                signIn()
