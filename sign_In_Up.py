@@ -101,10 +101,37 @@ def signUp():
 
 
 def signIn():
-        pass
+        print("Enter 1 to sign in as an institute")
+        print("Enter 2 to sign in as a student")
+
+        while True:
+                selector = input("\nEnter your choice from the above list (EXCEEDING VALUES WILL BE CLIPPED TO NEAREST LIMIT): ")
+
+                try:
+                        selector = int(selector)
+
+                        if selector < 1:
+                                selector = 1
+                        elif selector > 2:
+                                selector = 2
+
+                        break
+                except ValueError or EOFError:
+                        print("Invalid Input\n")
+
+        if selector == 1:
+                print("\n\nSIGN IN AS AN INSTITUTE")
+                print    ("-----------------------\n")
+        else:
+                print("\n\nSIGN IN AS A STUDENT")
+                print    ("--------------------\n")
 
 
 
+
+print()
+print("Enter 1 to sign up (as an institute)")
+print("Enter 2 to sign in\n")
 
 while True:
         selector = input("Enter your choice from the above list (EXCEEDING VALUES WILL BE CLIPPED TO NEAREST LIMIT): ")
