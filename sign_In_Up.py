@@ -1,4 +1,5 @@
 import os, hashlib, json, datetime
+from pathlib import Path
 
 os.system("cls")
 
@@ -78,17 +79,17 @@ def signUp():
         pswrd = hashlib.sha512(pswrd.encode("utf-8")).hexdigest()
 
 
-        credDict = {
-                "id": id,
-                "name": name,
-                "email": email,
-                "pswrd": pswrd,
-                "studData":{}
-        }
+        # Create a new set of JSON files for every new sign up
+        base = Path(__file__).parent / "data" / f"{id}"
 
-        # Create a new JSON file for every new sign up
-        with open(f"data/{id}.json", "w") as file:
-                file.write("{}")
+        (base / "academic").mkdir(parents=True, exist_ok=True)
+        (base / "cocurricular").mkdir(parents=True, exist_ok=True)
+        (base / "health").mkdir(parents=True, exist_ok=True)
+
+        for i in range(12):
+                (base / "academic" / f"grade{i+1}.json").write_text("{}")
+                (base / "cocurricular" / f"grade{i+1}.json").write_text("{}")
+                (base / "health" / f"grade{i+1}.json").write_text("{}")
 
 
         '''
