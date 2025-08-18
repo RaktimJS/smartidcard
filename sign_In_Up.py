@@ -21,10 +21,36 @@ def uid():
 
 def signUp():
         id = uid()
-        print("Your school ID is:", id)
+        print("Your school ID is:", id, "\n")
 
         # Email -------------------
-        email = input("\nEnter your email: ")
+        while True:
+                email = input("Enter your email: ")
+
+                if email.count("@") == 1:
+                        username = email[:email.index("@")]
+
+                        if len(username) > 0:
+                                domain = email[email.index("@") + 1:]
+
+                                if domain.count(".") == 1:
+                                        tld = domain[domain.index(".") + 1:]
+
+                                        if len(tld) > 0:
+                                                domainName = domain[:domain.index(".")]
+
+                                                if len(domainName) > 0:
+                                                        break
+                                                else:
+                                                        print("Invalid Input\n")
+                                        else:
+                                                print("Invalid input\n")
+                                else:
+                                        print("Invalid input\n")
+                        else:
+                                print("Invalid input\n")
+                else:
+                        print("Invalid input\n")
 
         # Name --------------------
         name = input("Enter the name of the school: ")
