@@ -100,8 +100,7 @@ def signUp():
                         print(f"Pasword must be at least 8 characters long")
 
 
-        # Hashing all the inputs for security
-        email = hashlib.sha512(email.encode("utf-8")).hexdigest()
+        # Hashing inputs for security
         pswrd = hashlib.sha512(pswrd.encode("utf-8")).hexdigest()
 
 
@@ -157,12 +156,38 @@ def signIn():
                 except ValueError or EOFError:
                         print("Invalid Input\n")
 
+        grantAccess = False
+
         if selector == 1:
                 print("\n\nSIGN IN AS AN INSTITUTE")
-                print    ("-----------------------\n")
+                print("-----------------------\n")
+
+                id = input("Enter school email or school ID: ")
+                pswrd = input("Enter password: ")
+
+                pswrd = hashlib.sha512(pswrd.encode("utf-8")).hexdigest()
+
+                with open("mapping.json", "r") as mapFile:
+                        mapFileData = json.load(mapFile)
+
+                if "@" in id:
+                        for i in mapFileData:
+                                if i["email"] == id and i["pswrd"] == pswrd:
+                                        grantAccess = True
+                                        break
+                else:
+                        for i in mapFileData:
+                                if i["id"] == id and i["pswrd"] == pswrd:
+                                        grantAccess = True
+                                        break
+
+                if grantAccess == True:
+                        print("Access granted")
+                else:
+                        print("Invalid Credentials")
         else:
                 print("\n\nSIGN IN AS A STUDENT")
-                print    ("--------------------\n")
+                print("--------------------\n")
 
 
 
