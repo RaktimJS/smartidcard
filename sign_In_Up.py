@@ -18,7 +18,7 @@ def uid():
         micros_since_epoch = int(t.timestamp() * 1_000_000)
         s = f"{micros_since_epoch:012d}"[-12:]  # keep the last 12 digits
 
-        return f"{s[0:4]}-{s[4:8]}-{s[8:12]}"
+        return f"{s[0:4]} {s[4:8]} {s[8:12]}"
 
 
 def signUp():
@@ -182,7 +182,7 @@ def signIn():
                                         break
                 else:
                         for i in mapFileData:
-                                if i["id"] == id and i["pswrd"] == pswrd:
+                                if i["id"].replace(" ", "") == id.replace(" ", "") and i["pswrd"] == pswrd:
                                         grantAccess = True
                                         name = i["name"]
                                         id = i["id"]
@@ -190,7 +190,7 @@ def signIn():
 
                 if grantAccess == True:
                         os.system("cls")
-                        print(f"{name.upper()} ID: {id}\n", sep="")
+                        print(f"{name.upper()}\nSchool ID: {id}\n\n", sep="")
                         entry()
                 else:
                         print("Invalid Credentials")
@@ -203,8 +203,8 @@ def signIn():
 
 if __name__ == "__main__":
         print()
-        print("Enter 1 to sign up (as an institute)")
-        print("Enter 2 to sign in\n")
+        print("Enter 1 to sign in")
+        print("Enter 2 to sign up (as an institute)\n")
 
         while True:
                 selector = input("Enter your choice from the above list (EXCEEDING VALUES WILL BE CLIPPED TO NEAREST LIMIT): ")
@@ -222,12 +222,12 @@ if __name__ == "__main__":
                         print("Invalid Input\n")
 
         if selector == 1:
-                print("\n\nSIGN UP AS AN INSTITUTE")
-                print    ("-----------------------\n")
-
-                signUp()
-        else:
                 print("\n\nSIGN IN")
                 print    ("-------\n")
 
                 signIn()
+        else:
+                print("\n\nSIGN UP AS AN INSTITUTE")
+                print    ("-----------------------\n")
+
+                signUp()
