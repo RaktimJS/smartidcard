@@ -178,16 +178,19 @@ def signIn():
                                 if i["email"] == id and i["pswrd"] == pswrd:
                                         grantAccess = True
                                         name = i["name"]
+                                        id = i["id"]
                                         break
                 else:
                         for i in mapFileData:
                                 if i["id"] == id and i["pswrd"] == pswrd:
                                         grantAccess = True
+                                        name = i["name"]
+                                        id = i["id"]
                                         break
 
                 if grantAccess == True:
                         os.system("cls")
-                        print(name.upper(), "\n", sep="")
+                        print(f"{name.upper()} ID: {id}\n", sep="")
                         entry()
                 else:
                         print("Invalid Credentials")
