@@ -1,6 +1,8 @@
 import os, hashlib, json, datetime
 from pathlib import Path
 
+from schoolDashboard import entry
+
 os.system("cls")
 
 
@@ -129,7 +131,8 @@ def signUp():
                 {
                         "id": id,
                         "email": email,
-                        "pswrd": pswrd
+                        "pswrd": pswrd,
+                        "name": name
                 }
         )
 
@@ -174,6 +177,7 @@ def signIn():
                         for i in mapFileData:
                                 if i["email"] == id and i["pswrd"] == pswrd:
                                         grantAccess = True
+                                        name = i["name"]
                                         break
                 else:
                         for i in mapFileData:
@@ -182,7 +186,9 @@ def signIn():
                                         break
 
                 if grantAccess == True:
-                        print("Access granted")
+                        os.system("cls")
+                        print(name.upper(), "\n", sep="")
+                        entry()
                 else:
                         print("Invalid Credentials")
         else:
