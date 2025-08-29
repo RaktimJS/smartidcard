@@ -1,7 +1,8 @@
 import os, hashlib, json, datetime
 from pathlib import Path
 
-from schoolDashboard import entry
+import schoolDashboard
+from script import acadDataMngr as academics
 
 os.system("cls")
 
@@ -18,7 +19,7 @@ def uid():
         micros_since_epoch = int(t.timestamp() * 1_000_000)
         s = f"{micros_since_epoch:012d}"[-12:]  # keep the last 12 digits
 
-        return f"{s[0:4]} {s[4:8]} {s[8:12]}"
+        return s
 
 
 def signUp():
@@ -182,16 +183,39 @@ def signIn():
                                         break
                 else:
                         for i in mapFileData:
-                                if i["id"].replace(" ", "") == id.replace(" ", "") and i["pswrd"] == pswrd:
+                                if i["id"] == id and i["pswrd"] == pswrd:
                                         grantAccess = True
                                         name = i["name"]
                                         id = i["id"]
                                         break
 
                 if grantAccess == True:
-                        os.system("cls")
-                        print(f"{name.upper()}\nSchool ID: {id}\n\n", sep="")
-                        entry()
+                        
+                        print("\nEnter 1 → Access academic data")
+                        print("Enter 1 → Access extra curricular data")
+                        print("Enter 1 → Access health data")
+
+                        while True:
+                                listSelector = input("\nEnter your choice: ")
+
+                                try:
+                                        listSelector = int(listSelector)
+                                        break
+                                except ValueError or EOFError:
+                                        print("Invalid Input\n")
+
+                        if listSelector == 1:
+                                academics(id)
+                        elif listSelector == 2:
+                                schoolDashboard.extraCurricular()
+                        elif listSelector == 3:
+                                schoolDashboard.health()
+                        elif listSelector < 1:
+                                print("Exceeding value, clipped to 1")
+                                academics(id)
+                        elif listSelector > 3:
+                                print("Exceeding value, clipped to 3")
+                                schoolDashboard.health()
                 else:
                         print("Invalid Credentials")
         else:
